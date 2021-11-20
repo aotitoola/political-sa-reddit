@@ -1,0 +1,1 @@
+web: sh setup.sh && streamlit run app/sentiment_analysis_streamlit.py
