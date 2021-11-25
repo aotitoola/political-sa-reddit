@@ -78,8 +78,8 @@ def show(inputs):
                 "test_f1": test_f1,
             }
 
-            save_tfidf_model('tfidf', new_model, inputs['model_func'], inputs['solver'], metrics_data,
-                             (len(X_train) + len(X_test)))
+            save_tfidf_model('tfidf', new_model, inputs['model_func'], metrics_data,
+                             (len(X_train) + len(X_test)), inputs['solver'], inputs['max_depth'])
 
         except FileNotFoundError as fnf_error:
             print(fnf_error)

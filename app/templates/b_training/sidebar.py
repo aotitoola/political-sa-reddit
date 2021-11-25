@@ -46,35 +46,36 @@ def show():
             inputs["pretrained"] = st.checkbox("View pre-trained model", value=False)
 
             if inputs["pretrained"]:
-
                 model_path = f'{os.getcwd()}/models/{inputs["model"]}/model'
-                model_files = [f for f in listdir(model_path) if isfile(join(model_path, f))]
+                model_files = [f for f in listdir(model_path) if (isfile(join(model_path, f)) and not f.startswith('.'))]
+                model_files = [f for f in model_files if f.startswith(inputs["model_func"])]
                 inputs["pretrained_model_file"] = st.selectbox("Select Pretrained Model", model_files)
-
             else:
+
+                inputs['max_iter'] = None
+                inputs['solver'] = None
+                inputs['max_depth'] = None
 
                 if inputs["model_func"] == 'logistic_regression':
                     inputs['max_iter'] = st.slider('Max. Iteration', min_value=200, value=400, max_value=600)
                     inputs['solver'] = st.selectbox("Which solver?", LR_SOLVERS)
 
                 if inputs["model_func"] == 'random_forest':
-                    inputs['max_iter'] = st.number_input(label='Maximum Depth', min_value=6, value=8, max_value=20)
+                    inputs['max_depth'] = st.number_input(label='Maximum Depth', min_value=6, value=6, max_value=20)
 
         if inputs["model"] in ['lstm', 'bert']:
 
             inputs["pretrained"] = st.checkbox("View pre-trained model", value=False)
 
             if inputs["pretrained"]:
-
                 model_path = f'{os.getcwd()}/models/{inputs["model"]}/model'
-                model_files = [f for f in listdir(model_path) if isfile(join(model_path, f))]
+                model_files = [f for f in listdir(model_path) if (isfile(join(model_path, f)) and not f.startswith('.'))]
                 inputs["pretrained_model_file"] = st.selectbox("Select Pretrained Model", model_files)
-
             else:
 
                 st.write("## Hyperparameters")
                 inputs['num_samples'] = st.multiselect('Select Sampling', key='data_sampling',
-                                                       options=[1000, 2000, 5000, 10000, 30000],
+                                                       options=[500, 1000, 2000, 5000, 10000, 30000, 50000, 100000, 120000],
                                                        default=[1000])
 
                 inputs['random_state'] = st.slider('Random State', min_value=3, value=42, max_value=99)

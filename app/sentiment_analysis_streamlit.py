@@ -4,6 +4,7 @@
 
 from util import utils
 from streamlit import legacy_caching
+import torch
 
 import os
 import collections
@@ -40,9 +41,8 @@ st.image(UOL_ICON_URL, width=300)
 """
 # Analysis of Reddit Submissions
 
-The goal of this project is to compare the performance of LSTM and pre-trained BERT.
-Here, I have about 50,000 labeled comments from political subreddits. The performance is measured in terms of accuracy and f1 score, spending a small and the same amount of time for hyperparameter tuning.
-
+The goal of this project is to compare the performance of Logistic Regression, Random Forest, LSTM and pre-trained BERT.
+Here, I have about 50,000 labeled comments from political subreddits. The performance is measured in terms of accuracy and f1 score.
 
 ---
 """
@@ -158,3 +158,32 @@ else:
             "test_view_directory", os.path.join(test_view_directory, "view.py")
         )
         test_view_directory.show(inputs)
+
+
+# metrics_dir = f'{os.getcwd()}/models/bert/metrics'
+#
+# for dirr in [metrics_dir]:
+#     if not os.path.exists(dirr):
+#         os.makedirs(dirr)
+#
+# metrics_file = 'bert_metrics_s120000_e3.pth'
+# metrics_path = os.path.join(metrics_dir, metrics_file)
+#
+#
+# # save metrics
+# # metrics_data = {
+# #     "acc": 0.6364,
+# #     "f1": 0.6363
+# # }
+#
+# metrics_data = {
+#     "acc": 0.6512,
+#     "f1": 0.6423
+# }
+#
+# torch.save(metrics_data, metrics_path)
+# print("Saved.........")
+
+
+
+

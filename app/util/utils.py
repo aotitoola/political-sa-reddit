@@ -182,7 +182,7 @@ def load_lstm_bert_pretrained_model(algo, filename):
     return loaded_model
 
 
-def save_tfidf_model(algo, model, filename, solver, metrics, datalength):
+def save_tfidf_model(algo, model, func, metrics, datalength, solver=None, depth=None):
 
     model_dir = f'{os.getcwd()}/models/{algo}/model'
     metrics_dir = f'{os.getcwd()}/models/{algo}/metrics'
@@ -191,13 +191,17 @@ def save_tfidf_model(algo, model, filename, solver, metrics, datalength):
         if not os.path.exists(dirr):
             os.makedirs(dirr)
 
-    model_file = f'{filename}_{solver}_{datalength}.pkl'
+    if func == 'logistic_regression':
+        model_file = f'{func}_{solver}_{datalength}.pkl'
+        metrics_file = f'{func}_{solver}_{datalength}.json'
+    else:
+        model_file = f'{func}_{depth}_{datalength}.pkl'
+        metrics_file = f'{func}_{depth}_{datalength}.json'
+
     model_path = os.path.join(model_dir, model_file)
     joblib.dump(model, model_path)
 
-    metrics_file = f'{filename}_{solver}_{datalength}.json'
     metrics_path = os.path.join(metrics_dir, metrics_file)
-
     # save metrics
     with open(metrics_path, 'w+') as f:
         json.dump(metrics, f, indent=4)
